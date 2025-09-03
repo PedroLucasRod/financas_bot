@@ -34,7 +34,7 @@ financas_bot/
 
 ## 1.1 Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/financas_bot.git
+   git clone https://github.com/PedroLucasRod/financas_bot.git
    cd financas_bot
 
 ## 1.2 Crie um ambiente virtual e ative:
@@ -110,4 +110,105 @@ Se encontrar bugs ou tiver ideias, abra uma issue.
 
 📜 Licença
 
+MIT License © 2025 - Pedro Lucas Rodrigues
+
+🤖 Personal Finance Bot on Telegram
+A Python + Telegram bot to record expenses and income directly from chat, save to Excel spreadsheet, and generate reports.
+
+🚀 Features
+Automatically record expenses and income.
+
+Recognize categories and subcategories via keywords.
+
+Generate financial summary reports.
+
+View detailed transaction records.
+
+Manually edit categories.
+
+Remove unwanted records.
+
+📂 Project Structure
+text
+financas_bot/
+│── bot.py              # Entry point
+│── handlers.py         # Message handling
+│── services.py         # Business logic
+│── storage.py          # Excel persistence
+│── utils.py            # Helper functions
+│── categorias.json     # Categories & keywords list
+│── requirements.txt    # Dependencies
+│── README.md           # Documentation
+⚙️ Installation
+Clone the repository:
+
+text
+git clone https://github.com/PedroLucasRod/financas_bot.git
+cd financas_bot
+Create and activate a virtual environment:
+
+text
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+Install dependencies:
+
+text
+pip install -r requirements.txt
+Add your Telegram Bot TOKEN in config.py or use environment variable.
+
+▶️ How to run
+Start the bot:
+
+text
+python bot.py
+Send messages on Telegram:
+
+Uber 35
+
+Supermarket 250
+
+Received salary 5000
+
+Use commands:
+
+visualizar → list all records
+
+relatorio → show financial summary
+
+categorias → list categories and keywords
+
+alterar 2 Food>Restaurant → change category
+
+remover 3 4 → delete records
+
+🧠 Example Classification
+Message:
+
+text
+Uber 35
+Saved Result:
+
+text
+✅ Recorded: 35.0 - Expense - Transport > Uber
+🏗️ Technologies Used
+Python 3.12
+
+python-telegram-bot
+
+OpenPyXL
+
+Matplotlib
+
+📊 Sample Report
+text
+Income: R$ 5000.00  
+Expenses by category:  
+- Food > Restaurant: R$ 150.00  
+- Transport > Uber: R$ 35.00
+🤝 Contributing
+Pull requests are welcome!
+If you find bugs or have ideas, please open an issue.
+
+📜 License
 MIT License © 2025 - Pedro Lucas Rodrigues
