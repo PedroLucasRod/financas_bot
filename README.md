@@ -34,7 +34,7 @@ financas_bot/
 
 ## 1.1 Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/financas_bot.git
+   git clone https://github.com/PedroLucasRod/financas_bot.git
    cd financas_bot
 
 ## 1.2 Crie um ambiente virtual e ative:
@@ -143,7 +143,7 @@ financas_bot/
 Clone the repository:
 
 text
-git clone https://github.com/yourusername/financas_bot.git
+git clone https://github.com/PedroLucasRod/financas_bot.git
 cd financas_bot
 Create and activate a virtual environment:
 
