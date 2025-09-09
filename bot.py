@@ -1,10 +1,11 @@
 import os
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from telegram import Update, Bot
 from telegram.ext import Dispatcher, MessageHandler, Filters
 from config import TOKEN
 from services.storage import load_workbook_and_sheet
 from handlers.message_handler import receber_mensagem
+
 
 # Carregar planilha
 workbook, sheet = load_workbook_and_sheet()
@@ -50,3 +51,24 @@ if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
+from fastapi.responses import FileResponse
+
+EXCEL_FILE = "financas.xlsx"
+ALLOWED_USERS = [5569080585, 2071995124]  # 🔹 Substitua pelos IDs do Telegram
+
+@app.get("/download")
+async def download_excel(request: Request):
+    # Verifica se veio user_id como query param
+    user_id = request.query_params.get("user_id")
+    if not user_id or int(user_id) not in ALLOWED_USERS:
+        raise HTTPException(status_code=403, detail="Acesso negado 🚫")
+
+    if not os.path.exists(EXCEL_FILE):
+        raise HTTPException(status_code=404, detail="Arquivo não encontrado")
+
+    return FileResponse(
+        EXCEL_FILE,
+        filename="financas_atual.xlsx",
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )

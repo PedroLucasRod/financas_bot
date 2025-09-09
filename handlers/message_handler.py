@@ -1,9 +1,11 @@
 # handlers/message_handler.py
+import os
 from telegram import Update
 from telegram.ext import CallbackContext
 from services.classifier import classificar_mensagem, lista_categorias
 from services.storage import add_record, get_all_records, update_record, delete_records
 from services.reports import gerar_relatorio
+from bot import ALLOWED_USERS
 
 def processar_linhas(workbook, sheet, texto):
     respostas = []
@@ -65,6 +67,21 @@ def receber_mensagem(update, context, workbook, sheet):
         update.message.reply_text(f"Categorias disponíveis:\n{lista_categorias()}")
     elif comando in ["oi", "olá", "inicio", "start"]:
         boas_vindas(update, context)
+    elif comando == "baixar":
+        user_id = update.message.chat_id  # ID do usuário que pediu
+        if user_id in ALLOWED_USERS:    
+            webhook_url = os.getenv("WEBHOOK_URL")
+            download_link = f"{webhook_url}/download?user_id={user_id}"
+            update.message.reply_text(
+                f"📥 *Download da planilha:*\n\n"
+                f"🔗 [Clique aqui para baixar]({download_link})\n\n"
+                f"💡 Sempre atualizado com seus dados!",
+                parse_mode="Markdown"
+            )
+        else:
+            update.message.reply_text("🚫 Você não tem permissão para baixar a planilha.")
+
     else:
         resposta = processar_linhas(workbook, sheet, msg)
         update.message.reply_text(resposta)
+    
