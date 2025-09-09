@@ -18,7 +18,8 @@
     },
     "Saúde": {
       "Farmácia": ["farmacia", "remedio", "medicamento", "drogaria"],
-      "Plano de Saúde": ["plano de saude", "unimed", "amil", "hapvida", "bradesco saude"]
+      "Plano de Saúde": ["plano de saude", "unimed", "amil", "hapvida", "bradesco saude"],
+      "Academia": ["academia", "gym", "smart fit", "fit", "personal trainer", "crossfit", "natação", "pilates", "yoga", "musculação"]
     },
     "Transporte": {
       "Uber": ["uber", "99", "taxi"],
