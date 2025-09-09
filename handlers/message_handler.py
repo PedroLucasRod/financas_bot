@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from services.classifier import classificar_mensagem, lista_categorias
 from services.storage import add_record, get_all_records, update_record, delete_records
 from services.reports import gerar_relatorio
-from bot import ALLOWED_USERS
+from config import ALLOWED_USERS
 
 def processar_linhas(workbook, sheet, texto):
     respostas = []
@@ -33,11 +33,12 @@ def boas_vindas(update, context):
         "Categorias: escreva 'categorias'")
     update.message.reply_text(texto)
 
-def receber_mensagem(update, context, workbook, sheet):
+def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
     msg = update.message.text.strip()
     args = msg.split()
     comando = args[0].lower()
     tipo_grafico = args[1].lower() if len(args) > 1 else None
+    
     if comando == "visualizar":
         registros = get_all_records(sheet)
         texto = "📋 *Registros:*\n"
@@ -45,9 +46,11 @@ def receber_mensagem(update, context, workbook, sheet):
             data, desc, valor, tipo, categoria = row
             texto += f"{i}. {data} | {desc} | R$ {valor:.2f} | {tipo} | {categoria}\n"
         update.message.reply_text(texto, parse_mode="Markdown")
+    
     elif comando == "relatorio":
         texto = gerar_relatorio(sheet, tipo_grafico, update)
         update.message.reply_text(texto, parse_mode="Markdown")
+    
     elif comando == "alterar":
         try:
             idx = int(args[1])
@@ -56,6 +59,7 @@ def receber_mensagem(update, context, workbook, sheet):
             update.message.reply_text(f"✅ Categoria alterada para {nova_categoria} no registro {idx}.")
         except Exception:
             update.message.reply_text("❌ Use: alterar <número> <nova_categoria>")
+    
     elif comando == "remover":
         try:
             indices = [int(i) for i in args[1:]]
@@ -63,25 +67,30 @@ def receber_mensagem(update, context, workbook, sheet):
             update.message.reply_text(f"✅ Registros removidos: {', '.join(map(str, indices))}")
         except Exception:
             update.message.reply_text("❌ Use: remover <número(s)> (ex: remover 1 2 3)")
+    
     elif comando == "categorias":
         update.message.reply_text(f"Categorias disponíveis:\n{lista_categorias()}")
+    
     elif comando in ["oi", "olá", "inicio", "start"]:
         boas_vindas(update, context)
+    
     elif comando == "baixar":
-        user_id = update.message.chat_id  # ID do usuário que pediu
-        if user_id in ALLOWED_USERS:    
+        user_id = update.effective_user.id  # ID correto do usuário
+        
+        # Verificar permissões
+        if ALLOWED_USERS and user_id not in ALLOWED_USERS:
+            update.message.reply_text("🚫 Você não tem permissão para baixar a planilha.")
+        else:
             webhook_url = os.getenv("WEBHOOK_URL")
-            download_link = f"{webhook_url}/download?user_id={user_id}"
+            download_link = f"{webhook_url}/download"
             update.message.reply_text(
                 f"📥 *Download da planilha:*\n\n"
                 f"🔗 [Clique aqui para baixar]({download_link})\n\n"
                 f"💡 Sempre atualizado com seus dados!",
                 parse_mode="Markdown"
             )
-        else:
-            update.message.reply_text("🚫 Você não tem permissão para baixar a planilha.")
-
+    
     else:
         resposta = processar_linhas(workbook, sheet, msg)
         update.message.reply_text(resposta)
-    
+

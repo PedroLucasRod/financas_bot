@@ -5,6 +5,7 @@ from telegram.ext import Dispatcher, MessageHandler, Filters
 from config import TOKEN
 from services.storage import load_workbook_and_sheet
 from handlers.message_handler import receber_mensagem
+from config import ALLOWED_USERS
 
 
 # Carregar planilha
@@ -16,7 +17,7 @@ dispatcher = Dispatcher(bot, None, workers=4)
 
 # Handler principal
 def handle(update, context):
-    receber_mensagem(update, context, workbook, sheet)
+    receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS)
 
 dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle))
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 from fastapi.responses import FileResponse
 
 EXCEL_FILE = "financas.xlsx"
-ALLOWED_USERS = [5569080585, 2071995124]  # 🔹 Substitua pelos IDs do Telegram
+
 
 @app.get("/download")
 async def download_excel(request: Request):
