@@ -24,13 +24,14 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup():
-    """Configura o webhook no startup"""
     webhook_url = os.getenv("WEBHOOK_URL")
     if webhook_url:
-        await bot.set_webhook(f"{webhook_url}/{TOKEN}")
-        print(f"✅ Webhook configurado em {webhook_url}/{TOKEN}")
+        url = f"{webhook_url}/{TOKEN}"
+        success = bot.set_webhook(url)
+        print(f"✅ Webhook configurado ({success}): {url}")
     else:
-        print("⚠️ Nenhuma WEBHOOK_URL configurada no ambiente!")
+        print("⚠️ Nenhuma WEBHOOK_URL configurada!")
+
 
 @app.post(f"/{TOKEN}")
 async def webhook(request: Request):
