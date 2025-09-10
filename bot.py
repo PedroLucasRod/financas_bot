@@ -6,6 +6,7 @@ from config import TOKEN
 from services.storage import load_workbook_and_sheet
 from handlers.message_handler import receber_mensagem
 from config import ALLOWED_USERS
+from fastapi.responses import FileResponse
 
 
 # Carregar planilha
@@ -60,11 +61,9 @@ EXCEL_FILE = "financas.xlsx"
 
 @app.get("/download")
 async def download_excel(request: Request):
-    # Verifica se veio user_id como query param
-    user_id = request.query_params.get("user_id")
-    if not user_id or int(user_id) not in ALLOWED_USERS:
-        raise HTTPException(status_code=403, detail="Acesso negado 🚫")
-
+    print(f"🔍 Endpoint /download chamado!")
+    print(f"📁 Arquivo existe: {os.path.exists(EXCEL_FILE)}")
+    print(f"📂 Caminho: {os.path.abspath(EXCEL_FILE)}")
     if not os.path.exists(EXCEL_FILE):
         raise HTTPException(status_code=404, detail="Arquivo não encontrado")
 
@@ -73,3 +72,9 @@ async def download_excel(request: Request):
         filename="financas_atual.xlsx",
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+@app.get("/test")
+async def test():
+    return {"status": "funcionando"}
+
+

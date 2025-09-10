@@ -83,7 +83,7 @@ def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
 
     elif comando == "baixar":
         webhook_url = os.getenv("WEBHOOK_URL")
-        download_link = f"{webhook_url}/download?user_id={user_id}"
+        download_link = f"{webhook_url}/download"
         update.message.reply_text(
             f"📥 *Download da planilha:*\n\n"
             f"🔗 [Clique aqui para baixar]({download_link})\n\n"
