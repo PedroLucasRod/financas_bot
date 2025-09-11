@@ -5,7 +5,7 @@ from telegram.ext import Dispatcher, MessageHandler, Filters
 from config import TOKEN
 from services.storage import load_workbook_and_sheet
 from handlers.message_handler import receber_mensagem
-from config import ALLOWED_USERS
+from config import ALLOWED_USERS, EXCEL_FILE
 from fastapi.responses import FileResponse
 
 
@@ -74,8 +74,6 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=port)
 
 from fastapi.responses import FileResponse
-
-EXCEL_FILE = "financas.xlsx"
 
 
 
