@@ -48,17 +48,6 @@ async def webhook(request: Request):
 async def home():
     return {"status": "🤖 Bot rodando via webhook!"}
 
-# Executar app no Render
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("PORT", 10000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
-
-from fastapi.responses import FileResponse
-
-EXCEL_FILE = "financas.xlsx"
-
-
 @app.get("/download")
 async def download_excel(request: Request):
     print(f"🔍 Endpoint /download chamado!")
@@ -76,5 +65,18 @@ async def download_excel(request: Request):
 @app.get("/test")
 async def test():
     return {"status": "funcionando"}
+
+
+# Executar app no Render
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
+from fastapi.responses import FileResponse
+
+EXCEL_FILE = "financas.xlsx"
+
+
 
 
