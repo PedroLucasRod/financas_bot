@@ -1,4 +1,5 @@
-# services/storage.py
+import os
+import json
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
@@ -6,7 +7,16 @@ from config import SHEET_ID
 
 # Configuração Google Sheets
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
-creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+
+# Lê as credenciais do Render (variável de ambiente)
+creds_json = os.getenv("GOOGLE_CREDENTIALS")
+
+if not creds_json:
+    raise RuntimeError("❌ Variável de ambiente GOOGLE_CREDENTIALS não encontrada")
+
+creds_dict = json.loads(creds_json)
+creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+
 client = gspread.authorize(creds)
 sheet = client.open_by_key(SHEET_ID).sheet1  # primeira aba
 
