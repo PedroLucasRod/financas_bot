@@ -7,37 +7,43 @@ from services.storage import add_record, get_all_records, update_record, delete_
 from services.reports import gerar_relatorio
 from config import ALLOWED_USERS
 
-def processar_linhas(workbook, sheet, texto):
+def processar_linhas(texto):
     respostas = []
     for linha in texto.splitlines():
         if not linha.strip():
             continue
         valor, tipo, categoria, subcategoria = classificar_mensagem(linha)
         if valor and tipo and categoria and subcategoria:
-            add_record(workbook, sheet, linha, valor, tipo, f"{categoria} > {subcategoria}")
+            add_record(linha, valor, tipo, f"{categoria} > {subcategoria}")
             respostas.append(f"✅ Registrado: {valor} - {tipo} - {categoria} > {subcategoria}")
         elif valor:
-            respostas.append(f"❌ Categoria não reconhecida para '{linha}'.\nCategorias disponíveis:\n{lista_categorias()}")
+            respostas.append(
+                f"❌ Categoria não reconhecida para '{linha}'.\nCategorias disponíveis:\n{lista_categorias()}"
+            )
         else:
             respostas.append(f"❌ Não entendi o valor em: '{linha}'")
     return "\n".join(respostas)
 
+
 def boas_vindas(update, context):
-    texto = ("👋 Olá! Bem-vindo ao seu bot de finanças!\n\n"
+    texto = (
+        "👋 Olá! Bem-vindo ao seu bot de finanças!\n\n"
         "Você pode:\n"
         "- Visualizar registros: escreva 'visualizar'\n"
         "- Ver relatório: escreva 'relatorio' ou 'relatorio barra'/'relatorio pizza'\n"
         "- Alterar categoria: escreva 'alterar <número> <nova_categoria>'\n"
         "- Remover registros: escreva 'remover <número(s)>'\n"
         "Para registrar gastos/ganhos, envie a descrição normalmente (pode ser várias linhas).\n"
-        "Categorias: escreva 'categorias'")
+        "Categorias: escreva 'categorias'"
+    )
     update.message.reply_text(texto)
 
-def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
+
+def receber_mensagem(update: Update, context: CallbackContext, allowed_users=None):
     user_id = update.effective_user.id
 
     # 🔒 Bloqueia acesso de quem não está autorizado
-    if ALLOWED_USERS and user_id not in ALLOWED_USERS:
+    if allowed_users and user_id not in allowed_users:
         update.message.reply_text("🚫 Você não tem permissão para usar este bot.")
         return
 
@@ -47,22 +53,29 @@ def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
     tipo_grafico = args[1].lower() if len(args) > 1 else None
 
     if comando == "visualizar":
-        registros = get_all_records(sheet)
+        registros = get_all_records()
+        if not registros:
+            update.message.reply_text("📋 Nenhum registro encontrado.")
+            return
         texto = "📋 *Registros:*\n"
         for i, row in enumerate(registros, start=1):
-            data, desc, valor, tipo, categoria = row
-            texto += f"{i}. {data} | {desc} | R$ {valor:.2f} | {tipo} | {categoria}\n"
+            data = row.get("Data")
+            desc = row.get("Descrição")
+            valor = row.get("Valor")
+            tipo = row.get("Tipo")
+            categoria = row.get("Categoria")
+            texto += f"{i}. {data} | {desc} | R$ {valor} | {tipo} | {categoria}\n"
         update.message.reply_text(texto, parse_mode="Markdown")
 
     elif comando == "relatorio":
-        texto = gerar_relatorio(sheet, tipo_grafico, update)
+        texto = gerar_relatorio(tipo_grafico, update)
         update.message.reply_text(texto, parse_mode="Markdown")
 
     elif comando == "alterar":
         try:
             idx = int(args[1])
             nova_categoria = args[2]
-            update_record(workbook, sheet, idx, nova_categoria)
+            update_record(idx, nova_categoria)
             update.message.reply_text(f"✅ Categoria alterada para {nova_categoria} no registro {idx}.")
         except Exception:
             update.message.reply_text("❌ Use: alterar <número> <nova_categoria>")
@@ -70,7 +83,7 @@ def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
     elif comando == "remover":
         try:
             indices = [int(i) for i in args[1:]]
-            delete_records(workbook, sheet, indices)
+            delete_records(indices)
             update.message.reply_text(f"✅ Registros removidos: {', '.join(map(str, indices))}")
         except Exception:
             update.message.reply_text("❌ Use: remover <número(s)> (ex: remover 1 2 3)")
@@ -92,5 +105,5 @@ def receber_mensagem(update, context, workbook, sheet, ALLOWED_USERS=None):
         )
 
     else:
-        resposta = processar_linhas(workbook, sheet, msg)
+        resposta = processar_linhas(msg)
         update.message.reply_text(resposta)

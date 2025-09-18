@@ -1,31 +1,38 @@
 # services/reports.py
 import matplotlib.pyplot as plt
 from io import BytesIO
+from services.storage import sheet
 
-def gerar_relatorio(sheet, tipo_grafico=None, update=None):
+def gerar_relatorio(tipo_grafico=None, update=None):
+    dados = sheet.get_all_values()[1:]  # ignora cabeçalho
     gastos = {}
     ganhos = 0
     total_gastos = 0
-    for row in sheet.iter_rows(min_row=2, values_only=True):
+
+    for row in dados:
         data, desc, valor, tipo, categoria = row
+        valor = float(valor)
         if tipo == "Gasto":
             gastos[categoria] = gastos.get(categoria, 0) + valor
             total_gastos += valor
         elif tipo == "Ganho":
             ganhos += valor
+
     saldo = ganhos - total_gastos
     texto = "📊 *Relatório Financeiro*\n\n"
     texto += f"💰 *Ganhos:* R$ {ganhos:.2f}\n"
     texto += f"💸 *Gastos:* R$ {total_gastos:.2f}\n"
     texto += f"⚖️ *Saldo:* {'🟢' if saldo >= 0 else '🔴'} R$ {saldo:.2f}\n\n"
+
     if gastos:
         texto += "*📂 Gastos por categoria:*\n"
         for cat, total in sorted(gastos.items(), key=lambda x: x[1], reverse=True):
             porcent = (total / total_gastos * 100) if total_gastos > 0 else 0
             barra = "█" * int(porcent // 5)
             texto += f"- {cat}: R$ {total:.2f} ({porcent:.1f}%) {barra}\n"
+
         if update and tipo_grafico in ["pizza", "barra"]:
-            fig, ax = plt.subplots(figsize=(7,5))
+            fig, ax = plt.subplots(figsize=(7, 5))
             categorias = list(gastos.keys())
             valores = list(gastos.values())
             if tipo_grafico == "barra":
@@ -44,4 +51,5 @@ def gerar_relatorio(sheet, tipo_grafico=None, update=None):
             update.message.reply_photo(photo=buf)
     else:
         texto += "Nenhum gasto registrado ainda ✅"
+
     return texto
