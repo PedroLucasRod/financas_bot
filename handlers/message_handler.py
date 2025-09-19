@@ -57,14 +57,13 @@ def receber_mensagem(update: Update, context: CallbackContext, allowed_users=Non
         if not registros:
             update.message.reply_text("📋 Nenhum registro encontrado.")
             return
+
         texto = "📋 *Registros:*\n"
         for i, row in enumerate(registros, start=1):
-            data = row.get("Data")
-            desc = row.get("Descrição")
-            valor = row.get("Valor")
-            tipo = row.get("Tipo")
-            categoria = row.get("Categoria")
+            # Agora get_all_records() já retorna lista de listas (não dict)
+            data, desc, valor, tipo, categoria = row
             texto += f"{i}. {data} | {desc} | R$ {valor} | {tipo} | {categoria}\n"
+
         update.message.reply_text(texto, parse_mode="Markdown")
 
     elif comando == "relatorio":
