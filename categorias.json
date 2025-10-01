@@ -2,29 +2,35 @@
   "Gastos": {
     "Alimentação": {
       "Supermercado": ["supermercado", "mercado", "compras do mes", "atacado", "carrefour", "extra", "feira"],
-      "Restaurante": ["restaurante", "jantar", "almoco fora", "marmita", "pizzaria", "lanchonete", "churrascaria", "ifood", "ubereats", "delivery"],
+      "Restaurante": ["restaurante", "jantar", "almoco fora", "marmita", "pizzaria", "lanchonete", "churrascaria", "ifood",
+                      "ubereats", "delivery", "comida"],
       "Padaria": ["padaria", "pao", "pães", "lanchinho", "doces padaria"]
     },
     "Contas": {
       "Água": ["agua", "conta de agua", "saae", "saneamento", "cagece"],
       "Luz": ["luz", "energia", "conta de luz", "enel", "coelce", "eletricidade"],
-      "Internet": ["internet", "wifi", "net", "vivo fibra", "claro net", "oi fibra"],
+      "Internet": ["internet", "wifi", "net", "vivo fibra", "claro net", "oi fibra", "orbe"],
       "Telefone": ["telefone", "celular", "conta de telefone", "tim", "vivo", "claro", "oi"]
     },
     "Moradia": {
       "Aluguel": ["aluguel", "alugar", "renda da casa"],
       "Condomínio": ["condominio", "condo", "taxa condominial"],
-      "Financiamento": ["financiamento", "emprestimo banco", "parcela financiamento"]
+      "Financiamento": ["financiamento", "emprestimo banco", "parcela financiamento"],
+      "Conserto e Manutenção": ["manutencao casa", "reparo", "conserto", "pintura", "eletricista", "encanador", "pedreiro",
+                                "deposito", "materiais"]
     },
-    "Saúde": {
+    "Saúde e bem estar": {
       "Farmácia": ["farmacia", "remedio", "medicamento", "drogaria"],
       "Plano de Saúde": ["plano de saude", "unimed", "amil", "hapvida", "bradesco saude"],
-      "Academia": ["academia", "gym", "smart fit", "fit", "personal trainer", "crossfit", "natação", "pilates", "yoga", "musculação"]
+      "Academia": ["academia", "gym", "smart fit", "fit", "personal trainer", "crossfit", "natação", "pilates", "yoga", "musculação"],
+      "Petshop": ["petshop", "veterinario", "banho e tosa", "ração", "remedio pet", "consulta pet"],
+      "Cabeleireiro": ["cabeleireiro", "barbeiro", "salão de beleza", "manicure", "pedicure", "corte de cabelo"]
     },
     "Transporte": {
       "Uber": ["uber", "99", "taxi"],
       "Combustível": ["gasolina", "etanol", "diesel", "combustivel", "posto"],
-      "Ônibus": ["onibus", "metrô", "passagem", "bilhete unico"]
+      "Ônibus": ["onibus", "metrô", "passagem", "bilhete unico"],
+      "Consertos carro": ["manutencao carro", "oficina", "mecanico", "revisao", "troca de oleo", "pneu", "bateria", "borracharia" ]
     },
     "Cartão de Crédito": {
       "Parcelamento": ["cartao", "credito", "fatura", "parcelamento", "visa", "mastercard", "nubank", "santander"]
@@ -35,12 +41,15 @@
     "Lazer": {
       "Entretenimento": ["cinema", "show", "teatro", "balada", "boate", "festa"],
       "Streaming": ["netflix", "spotify", "hbo", "prime video", "disney+"],
-      "Viagens": ["viagem", "turismo", "passeio", "ferias lazer"]
+      "Viagens": ["viagem", "turismo", "passeio", "ferias lazer"],
+      "Hobbies": ["prancha", "bola", "instrumento musical", "jogo", "livro"]
     },
     "Outros": {
       "Presentes": ["presente", "lembranca", "aniversario", "mimo"],
-      "Doações": ["doacao", "ajuda", "caridade", "solidariedade"],
-      "Reserva": ["reserva", "poupanca", "guardar dinheiro", "investimento"]
+      "Doações": ["doacao", "ajuda", "caridade", "solidariedade", "rifa"],
+      "Reserva": ["reserva", "poupanca", "guardar dinheiro", "investimento"],
+      "Não Classificado": ["outros", "diversos", "varios", "gasto extra", "gasto inesperado"],
+      "Cartorio": ["cartorio", "registro", "certidao"]
     }
   },
 
