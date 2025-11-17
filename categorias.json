@@ -49,7 +49,16 @@
       "Doações": ["doacao", "ajuda", "caridade", "solidariedade", "rifa"],
       "Reserva": ["reserva", "poupanca", "guardar dinheiro", "investimento"],
       "Não Classificado": ["outros", "diversos", "varios", "gasto extra", "gasto inesperado"],
-      "Cartorio": ["cartorio", "registro", "certidao"]
+      "Cartorio": ["cartorio", "registro", "certidao"],
+      "Impostos": ["imposto", "iptu", "ipva", "irpf", "declaração de imposto de renda"],
+      "Educação": ["curso", "faculdade", "escola", "livros didaticos", "material escolar", "mensalidade escolar"],
+      "Roupas e Acessórios": ["roupa", "calçado", "vestuário", "acessório", "moda", "sapato", "bolsa", "joia"],
+      "Eletrônicos": ["celular novo", "notebook", "tablet", "fones de ouvido", "smartwatch", "tv", "aparelho eletrônico"], 
+      "Imprevistos": ["imprevisto", "emergência", "gasto urgente", "despesa inesperada"],
+      "Seguros": ["seguro", "cobertura", "apolice", "sinistro"],
+      "Papelaria": ["material de escritório", "papelaria", "caneta", "caderno", "impressora", "cartucho de tinta"],
+      "Escritorio": ["taxas cartoriais", "honorarios", "servicos juridicos", "advogado"]
+
     }
   },
 
