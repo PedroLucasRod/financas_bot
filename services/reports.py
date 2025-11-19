@@ -41,17 +41,17 @@ def gerar_relatorio(tipo_grafico=None, update=None):
         
         saldo = ganhos - total_gastos
         
-        texto = "📊 *Relatório Financeiro*\\n\\n"
-        texto += f"💰 *Ganhos:* R$ {ganhos:.2f}\\n"
-        texto += f"💸 *Gastos:* R$ {total_gastos:.2f}\\n"
-        texto += f"⚖️ *Saldo:* {'🟢' if saldo >= 0 else '🔴'} R$ {saldo:.2f}\\n\\n"
+        texto = "📊 *Relatório Financeiro*\n\n"
+        texto += f"💰 *Ganhos:* R$ {ganhos:.2f}\n"
+        texto += f"💸 *Gastos:* R$ {total_gastos:.2f}\n"
+        texto += f"⚖️ *Saldo:* {'🟢' if saldo >= 0 else '🔴'} R$ {saldo:.2f}\n\n"
         
         if gastos:
-            texto += "*📂 Gastos por categoria:*\\n"
+            texto += "*📂 Gastos por categoria:*\n"
             for cat, total in sorted(gastos.items(), key=lambda x: x[1], reverse=True):
                 porcent = (total / total_gastos * 100) if total_gastos > 0 else 0
                 barra = "█" * int(porcent // 5)
-                texto += f"- {cat}: R$ {total:.2f} ({porcent:.1f}%) {barra}\\n"
+                texto += f"- {cat}: R$ {total:.2f} ({porcent:.1f}%) {barra}\n"
             
             # Gera gráfico se solicitado
             if update and tipo_grafico in ["pizza", "barra"]:
@@ -80,7 +80,7 @@ def gerar_relatorio(tipo_grafico=None, update=None):
                     
                 except Exception as graph_error:
                     logging.error(f"❌ Erro ao gerar gráfico: {graph_error}")
-                    texto += "\\n⚠️ Não foi possível gerar o gráfico."
+                    texto += "\n⚠️ Não foi possível gerar o gráfico."
         else:
             texto += "Nenhum gasto registrado ainda ✅"
         
