@@ -6,6 +6,13 @@ from config import TOKEN, ALLOWED_USERS, SHEET_ID
 from handlers.message_handler import receber_mensagem
 from fastapi.responses import RedirectResponse
 
+import logging
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
 # Bot e Dispatcher
 bot = Bot(TOKEN)
 dispatcher = Dispatcher(bot, None, workers=4)
