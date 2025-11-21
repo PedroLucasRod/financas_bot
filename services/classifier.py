@@ -90,4 +90,7 @@ def lista_categorias():
     ganhos = categorias_dict.get("Ganhos", {})
     if ganhos:
         linhas.append("\n💰 *Categorias de Ganhos*")
-        for subcat in ganhos
+        for subcat in ganhos.keys():
+            linhas.append(f"• {subcat}")
+
+    return "\n".join(linhas)
