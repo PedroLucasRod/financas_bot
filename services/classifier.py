@@ -47,7 +47,7 @@ def classificar_mensagem(mensagem):
                 if re.search(rf"\b{re.escape(palavra_norm)}\b", mensagem_norm):
                     categoria = cat
                     subcategoria = subcat
-                    tipo = "Gasto"
+                    tipo = "Gastos"
                     break
             if categoria:
                 break
