@@ -65,7 +65,7 @@
   "Ganhos": {
     "Salário": ["salario", "recebi salario", "pagamento", "holerite"],
     "Vale Alimentação": ["vale alimentacao", "ticket refeicao", "vale refeicao"],
-    "Receitas Extras": ["receita extra", "ganhei dinheiro", "pix recebido", "dinheiro entrou", "transferencia recebida", "freela", "renda extra", "deposito"],
+    "Receitas Extras": ["receita extra", "ganhei dinheiro", "pix recebido", "dinheiro entrou", "transferencia recebida", "freela", "renda extra", "deposito", "extra"],
     "Bonificação": ["bonus", "bonificacao", "premio empresa"],
     "Férias": ["ferias", "ferias pagas"],
     "13º Salário": ["decimo terceiro", "13 salario", "13o"]
